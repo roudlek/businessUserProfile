@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserProfileSignUpService {
     private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
-    private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@(.+)$";
+//    private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@(.+)$";
     public UserRepository userRepository;
 
     public UserProfileSignUpService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<?> signUp(String userName, int userAge, String userEmail, String userPassword) {
+    public ResponseEntity<?> signUp(String userName, Byte userAge, String userEmail, String userPassword) {
 
         UserProfile userProfile = userRepository.findByEmail(userEmail);
         if (userProfile != null) {
@@ -27,9 +27,9 @@ public class UserProfileSignUpService {
         }
 //       else if (!Objects.equals(userPassword, userConfirmPassword)) {
 //            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Passwords do not match");}
-        else if (!userEmail.matches(EMAIL_PATTERN)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid email format.");
-        }
+//        else if (!userEmail.matches(EMAIL_PATTERN)) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid email format.");
+//        }
         else{
             UserProfile newUserProfile  = new UserProfile();
             newUserProfile.setName(userName);

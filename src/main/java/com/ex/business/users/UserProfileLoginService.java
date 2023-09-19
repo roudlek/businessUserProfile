@@ -8,13 +8,10 @@ import java.util.Objects;
 
 @Service
 public class UserProfileLoginService {
-
     private final UserRepository userRepository;
-
     public UserProfileLoginService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
     public ResponseEntity<?> login(String userEmail, String userPassword){
         UserProfile userProfile = userRepository.findByEmail(userEmail);
 
