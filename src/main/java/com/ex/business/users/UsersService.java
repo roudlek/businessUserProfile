@@ -1,5 +1,8 @@
 package com.ex.business.users;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,12 +25,16 @@ public class UsersService {
         return userRepository.findAll();
     }
 
+    public Page<UserProfile> getUserProfilesByPagination(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
     public Optional<UserProfile> findUserById(Long id){
         return userRepository.findById(id);
     }
 
 
-    public UserProfile findByNameContains(String keyword) {
-        return userRepository.findByNameContains(keyword);
+    public List<UserProfile> findAllByNameContains(String keyword) {
+        return userRepository.findAllByNameContains(keyword);
     }
 }

@@ -24,7 +24,7 @@ public class UserProfile {
     @Max(value = 127) @Min(value = 18)
     private Byte age;
 
-    @Email(regexp = "anotherRegex")
+    @Email(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
     @Size(min = 10, max = 100)
     private String email;
 

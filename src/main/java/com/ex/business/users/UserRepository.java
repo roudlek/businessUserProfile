@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<UserProfile, Long> {
     UserProfile findByEmail(String userEmail);
     Optional<UserProfile> findById(Long id);
-    UserProfile findByNameContains(String Keyword);
+    List<UserProfile> findAllByNameContains(String Keyword);
 
     @Query("SELECT u FROM UserProfile u WHERE u.age > :userAge ORDER BY u.age ASC")
     List<UserProfile> getAllUserProfileTheirAge(@Param("userAge") Byte age);
