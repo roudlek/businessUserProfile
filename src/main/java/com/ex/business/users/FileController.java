@@ -10,6 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class FileController {
     @GetMapping("/upload")
     public String uploadPage(){
-        return "folderupload/upload";
+        return "upload";
     }
 }

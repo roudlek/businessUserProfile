@@ -37,6 +37,11 @@ public class HomeController {
 //        return usersService.findUserById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 //    }
 
+    @GetMapping("/home")
+    public ResponseEntity<String> homePage() {
+        return new ResponseEntity<>("Welcome to home", HttpStatus.OK);
+    }
+
     @GetMapping("/user/{userId}")
     public UserProfile getUserByHisId(@PathVariable(name = "userId") Long id) {
         Optional<UserProfile> user = usersService.findUserById(id);
@@ -59,10 +64,7 @@ public class HomeController {
         return usersService.getUserProfilesByPagination(pageable);
     }
 
-    @GetMapping("/home")
-    public ResponseEntity<String> homePage() {
-        return new ResponseEntity<>("Welcome to home", HttpStatus.OK);
-    }
+
 
     @PostMapping("/sign_up")
     public ResponseEntity<?> sign_up(
@@ -126,12 +128,12 @@ public class HomeController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(
-            @RequestParam(name = "email") String userEmail,
-            @RequestParam(name = "password") String userPassword) {
-        return userProfileLoginService.login(userEmail, userPassword);
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(
+//            @RequestParam(name = "email") String userEmail,
+//            @RequestParam(name = "password") String userPassword) {
+//        return userProfileLoginService.login(userEmail, userPassword);
+//    }
 
     @GetMapping("/user/filter/{keyword}")
     public List<UserProfile> findAllByNameContains(@PathVariable String keyword){
