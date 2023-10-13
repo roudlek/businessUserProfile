@@ -167,5 +167,16 @@ public class HomeController {
         }
     }
 
+    @GetMapping("/getbyname")
+    public List<UserProfile> getAllUserProfilesWhereNameIsEqualTo(@RequestParam String name){
+        return usersService.getAllUserProfilesWhereNameIsEqualTo(name);
+    }
 
+
+    @PostMapping("/adduser")
+    public ResponseEntity<?> addUserProfile(@RequestParam String name,@RequestParam Byte age,
+                               @RequestParam String email, @RequestParam String password){
+        usersService.addUserProfile(name,age,email,password);
+        return new ResponseEntity<>("user with name: " + name + " has been created", HttpStatus.CREATED);
+    }
 }

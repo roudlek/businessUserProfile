@@ -5,6 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -25,14 +29,18 @@ public class SecurityConfig {
 //                            ,"/oauth2/authorization/google",
                             "/home","/"
                             ,"/api/home","/api/users"
-                            ,"/login","/register","/css/**","/js/**","/favicon.ico").permitAll();
+                            ,"/login","/register","/css/**","/js/**","/favicon.ico","/webjars/**","/getbyname","/adduser").permitAll();
+//                            .hasRole("USER");
+//                    auth.permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .formLogin( form -> {
                     form.loginPage("/login");
-//                    form.defaultSuccessUrl("/home");
-                    form.loginProcessingUrl("/login");
-                    form.failureUrl("/login?error=true");
+                    form.usernameParameter("username");
+                    form.passwordParameter("password");
+                    form.defaultSuccessUrl("/api/home");
+                    form.loginProcessingUrl("/login/process");
+                    form.failureUrl("/login?failed");
                     form.permitAll(true);
                 })
 
@@ -45,5 +53,18 @@ public class SecurityConfig {
                 .logout(logout ->
                         logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll())
         .build();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails user = User.builder()
+                .username("user")
+                .password("password")
+//                .accountExpired(false)
+//                .accountLocked(false)
+//                .credentialsExpired(false)
+//                .roles("USER")
+                .build();
+        return new InMemoryUserDetailsManager(user);
     }
 }
