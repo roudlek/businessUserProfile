@@ -1,33 +1,25 @@
 package com.ex.business.users.Controller;
 
-import com.ex.business.users.UserProfileLoginService;
-import com.ex.business.users.UserProfileSignUpService;
-import com.ex.business.users.UserRepository;
-import com.ex.business.users.UsersService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.ex.business.users.Services.UserProfileLoginService;
+import com.ex.business.users.Services.UserProfileSignUpService;
+import com.ex.business.users.Repositories.UserRepository;
+import com.ex.business.users.Services.UsersServiceImpl;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Objects;
 
 @Controller
 public class LoginController {
     private final UserProfileSignUpService userProfileSignUpService;
     private final UserProfileLoginService userProfileLoginService;
-    private final UsersService usersService;
+    private final UsersServiceImpl usersServiceImpl;
     private final UserRepository userRepository;
 
     public LoginController(UserProfileSignUpService userProfileSignUpService,
-                           UserProfileLoginService userProfileLoginService, UsersService usersService, UserRepository userRepository) {
+                           UserProfileLoginService userProfileLoginService, UsersServiceImpl usersServiceImpl, UserRepository userRepository) {
         this.userProfileSignUpService = userProfileSignUpService;
         this.userProfileLoginService = userProfileLoginService;
-        this.usersService = usersService;
+        this.usersServiceImpl = usersServiceImpl;
         this.userRepository = userRepository;
     }
 

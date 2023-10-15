@@ -1,4 +1,4 @@
-package com.ex.business.users;
+package com.ex.business.users.Configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

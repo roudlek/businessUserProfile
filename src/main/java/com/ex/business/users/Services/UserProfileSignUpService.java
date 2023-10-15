@@ -1,5 +1,7 @@
-package com.ex.business.users;
+package com.ex.business.users.Services;
 
+import com.ex.business.users.Repositories.UserRepository;
+import com.ex.business.users.Entities.UserProfile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,11 +22,12 @@ public class UserProfileSignUpService {
         if (userProfile != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists.");
         }
-        else if (userAge < 18 && userAge > 0) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied for age under 18.");
-        } else if (!userPassword.matches(PASSWORD_PATTERN)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password does not meet the right format.");
-        }
+//        else if (userAge < 18 && userAge > 0) {
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied for age under 18.");
+//        }
+//        else if (!userPassword.matches(PASSWORD_PATTERN)) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password does not meet the right format.");
+//        }
 //       else if (!Objects.equals(userPassword, userConfirmPassword)) {
 //            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Passwords do not match");}
 //        else if (!userEmail.matches(EMAIL_PATTERN)) {

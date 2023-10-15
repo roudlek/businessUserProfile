@@ -1,5 +1,7 @@
-package com.ex.business.users;
+package com.ex.business.users.Services;
 
+import com.ex.business.users.Repositories.UserRepository;
+import com.ex.business.users.Entities.UserProfile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

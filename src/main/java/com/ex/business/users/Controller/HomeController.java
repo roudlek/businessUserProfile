@@ -1,5 +1,11 @@
-package com.ex.business.users;
+package com.ex.business.users.Controller;
 
+import com.ex.business.users.DTO.UserProfileDTO;
+import com.ex.business.users.Repositories.UserRepository;
+import com.ex.business.users.Services.UserProfileLoginService;
+import com.ex.business.users.Services.UserProfileSignUpService;
+import com.ex.business.users.Services.UsersServiceImpl;
+import com.ex.business.users.Entities.UserProfile;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,14 +26,14 @@ public class HomeController {
 
     private final UserProfileSignUpService userProfileSignUpService;
     private final UserProfileLoginService userProfileLoginService;
-    private final UsersService usersService;
+    private final UsersServiceImpl usersServiceImpl;
     private final UserRepository userRepository;
 
     public HomeController(UserProfileSignUpService userProfileSignUpService,
-                          UserProfileLoginService userProfileLoginService, UsersService usersService, UserRepository userRepository) {
+                          UserProfileLoginService userProfileLoginService, UsersServiceImpl usersServiceImpl, UserRepository userRepository) {
         this.userProfileSignUpService = userProfileSignUpService;
         this.userProfileLoginService = userProfileLoginService;
-        this.usersService = usersService;
+        this.usersServiceImpl = usersServiceImpl;
         this.userRepository = userRepository;
     }
 
@@ -44,7 +50,7 @@ public class HomeController {
 
     @GetMapping("/user/{userId}")
     public UserProfile getUserByHisId(@PathVariable(name = "userId") Long id) {
-        Optional<UserProfile> user = usersService.findUserById(id);
+        Optional<UserProfile> user = usersServiceImpl.findUserById(id);
         if (user.isPresent()) {
             return user.get();
         } else {
@@ -54,19 +60,20 @@ public class HomeController {
 
     @GetMapping("/users")
     public List<UserProfile> getAllUsers(){
-        return usersService.findAll();
+        return usersServiceImpl.findAll();
     }
     @GetMapping("/users/pagination")
     public Page<UserProfile> getUserProfilesByPagination(@RequestParam(defaultValue = "0", name = "page") int page,
                                                          @RequestParam(defaultValue = "10", name = "size") int size,
                                                          @RequestParam(defaultValue = "id") String[] columnName){
         Pageable pageable = PageRequest.of(page, size, Sort.by(columnName));
-        return usersService.getUserProfilesByPagination(pageable);
+        return usersServiceImpl.getUserProfilesByPagination(pageable);
     }
 
 
 
     @PostMapping("/sign_up")
+    @ResponseStatus(HttpStatus.CREATED) // this will add a status of 201 CREATED if everything was successfull
     public ResponseEntity<?> sign_up(
             @RequestParam(name = "name") String userName,
             @RequestParam(name = "age") Byte userAge,
@@ -80,7 +87,7 @@ public class HomeController {
                                        @RequestParam(name = "age") Byte userAge,
                                        @RequestParam(name = "email") String userEmail,
                                        @RequestParam(name = "password") String userPassword) {
-        Optional<UserProfile> user = usersService.findUserById(id);
+        Optional<UserProfile> user = usersServiceImpl.findUserById(id);
         if (user.isPresent()) {
             UserProfile foundUser = user.get();
             if (userName != null) {
@@ -105,7 +112,7 @@ public class HomeController {
     @PatchMapping("/edit/{userId}")
     public ResponseEntity<UserProfile> changeFullResource(@PathVariable(name = "userId") Long id,
                                                        @RequestParam(name = "password") String userPassword) {
-        Optional<UserProfile> user = usersService.findUserById(id);
+        Optional<UserProfile> user = usersServiceImpl.findUserById(id);
         if (user.isPresent()) {
             UserProfile foundUser = user.get();
             if (userPassword != null) {
@@ -120,7 +127,7 @@ public class HomeController {
 
     @DeleteMapping("/user/delete/{userId}")
     public ResponseEntity<?> deleteUserById(@PathVariable(name = "userId") Long id){
-        Optional<UserProfile> user = usersService.findUserById(id);
+        Optional<UserProfile> user = usersServiceImpl.findUserById(id);
         if (user.isPresent()) {
             userRepository.deleteById(id);
             return new ResponseEntity<>("user with id: " + id + " has been deleted", HttpStatus.NO_CONTENT);
@@ -137,19 +144,19 @@ public class HomeController {
 
     @GetMapping("/user/filter/{keyword}")
     public List<UserProfile> findAllByNameContains(@PathVariable String keyword){
-        return usersService.findAllByNameContains(keyword);
+        return usersServiceImpl.findAllByNameContains(keyword);
     }
 
     @GetMapping("/user/ageGreaterThan/{age}")
     public List<UserProfile> getAllUsersWithAgeGreaterThan(@PathVariable Byte age){
-        return usersService.getAllUsersWithAgeGreaterThan(age);
+        return usersServiceImpl.getAllUsersWithAgeGreaterThan(age);
     }
 
     @GetMapping("/user/filter/byNameLikeAndAgeGreaterThan")
     public List<UserProfile> getUsersByNameLikeAndAgeGreaterThan(
             @RequestParam(name = "name") String userName,
             @RequestParam(name = "age") Byte userAge){
-        return usersService.getUsersByNameLikeAndAgeGreaterThan(userName,userAge);
+        return usersServiceImpl.getUsersByNameLikeAndAgeGreaterThan(userName,userAge);
     }
 
     @PostMapping("/upload")
@@ -169,14 +176,24 @@ public class HomeController {
 
     @GetMapping("/getbyname")
     public List<UserProfile> getAllUserProfilesWhereNameIsEqualTo(@RequestParam String name){
-        return usersService.getAllUserProfilesWhereNameIsEqualTo(name);
+        return usersServiceImpl.getAllUserProfilesWhereNameIsEqualTo(name);
     }
 
 
     @PostMapping("/adduser")
     public ResponseEntity<?> addUserProfile(@RequestParam String name,@RequestParam Byte age,
                                @RequestParam String email, @RequestParam String password){
-        usersService.addUserProfile(name,age,email,password);
+        usersServiceImpl.addUserProfile(name,age,email,password);
         return new ResponseEntity<>("user with name: " + name + " has been created", HttpStatus.CREATED);
     }
+
+    @PostMapping("/addUserProfileUsingDTO")
+    public ResponseEntity<?> addUserProfileUsingDTO(@RequestParam String name,@RequestParam Byte age,
+                                            @RequestParam String email, @RequestParam String password){
+
+        UserProfileDTO userProfileDTO = usersServiceImpl.addUserProfileUsingDTO(name,age,email,password);
+        return new ResponseEntity<>(userProfileDTO, HttpStatus.CREATED);
+    }
+
+
 }
