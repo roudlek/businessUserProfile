@@ -21,7 +21,7 @@ public interface UserRepository extends JpaRepository<UserProfile, Long> {
     List<UserProfile> getAllUserProfileTheirAge(@Param("userAge") Byte age);
 
     @Query(
-            value = "SELECT up FROM UserProfile up WHERE up.name LIKE :name AND up.age > :userAge ORDER BY up.age DESC"
+            value = "SELECT up FROM UserProfile up WHERE up.name LIKE :name% AND up.age > :userAge ORDER BY up.age DESC"
     )
     List<UserProfile> findByNameLikeAndAgeAbove(
             @Param("name") String name, @Param("userAge") Byte age);

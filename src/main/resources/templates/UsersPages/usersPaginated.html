@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profiles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #3498db;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<h1>User Profiles</h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Email</th>
+    </tr>
+    <tr th:each="userProfileDTO : ${userProfileDTOList}">
+        <td th:text="${userProfileDTO.name}"></td>
+        <td th:text="${userProfileDTO.age}"></td>
+        <td th:text="${userProfileDTO.email}"></td>
+    </tr>
+</table>
+<!-- Pagination links with the correct path -->
+<ul class="pagination">
+    <li th:class="${userProfileDTOPage.previousOrFirstPageable()}? 'disabled'">
+        <a th:href="@{${'/usersPaginated?page=' + 0}}">&laquo;</a>
+    </li>
+    <li th:each="page : ${#numbers.sequence(0, userProfileDTOPage.getTotalPages() - 1)}" th:class="${userProfileDTOPage.getNumber() == page}? 'active'">
+        <a th:href="@{${'/usersPaginated?page=' + page}}"><span th:text="${page + 1}"></span></a>
+    </li>
+    <li th:class="${userProfileDTOPage.nextOrLastPageable()}? 'disabled'">
+        <a th:href="@{${'/usersPaginated?page=' + (userProfileDTOPage.totalPages - 1)}}">&raquo;</a>
+    </li>
+</ul>
+
+</body>
+</html>

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -28,15 +30,24 @@ public class UserProfile {
     @Size(min = 10, max = 100)
     private String email;
 
-//    @Pattern is the generic annotation
-//    @Pattern(regexp = "regularEXdyalkom")
-//    @Size(min = 6, max = 20)
-//    private String numberPhone;
 
-//    private LocalDateTime dateCreated;
-//    @NotEmpty
 
 //  at least one number, one Capital letter, one special character, 8 characters
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$", message = "Password does not meet the right format.")
     private String password;
+
+    @CreationTimestamp
+    private LocalDateTime createdOn;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedOn;
+
+    private Role role = Role.USER;
+
+    //    @Pattern is the generic annotation
+    //    @Pattern(regexp = "regularEXdyalkom")
+    //    @Size(min = 6, max = 20)
+    //    private String numberPhone;
+    //    private LocalDateTime dateCreated;
+    //    @NotEmpty
 }
