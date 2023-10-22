@@ -35,6 +35,8 @@ public interface UserRepository extends JpaRepository<UserProfile, Long> {
     @Transactional
     @Query(value = "INSERT INTO user_profile (name, age, email, password) VALUES (:name, :age, :email, :password)", nativeQuery = true)
     void addUserProfile(@Param("name") String name, @Param("age") Byte age, @Param("email") String email, @Param("password") String password);
+
+    UserProfile findByName(String username);
 //    @Query("SELECT u FROM UserProfile u WHERE u.email = :userEmail")
 //    UserProfile findByEmail(@Param("userEmail") String userEmail);
 //    UserProfile findByEmailAndPassword(String userEmail, String userPassword);

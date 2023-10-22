@@ -41,7 +41,7 @@ public class UsersPages {
 //        return "UsersPages/usersPaginated";
 //    }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     public String getUserById(Model model, @PathVariable(name = "id") Long id){
         Optional<UserProfile> userProfile = usersServiceImpl.findUserById(id);
         model.addAttribute("userProfile",userProfile);

@@ -99,7 +99,7 @@ public class HomeController {
     @PostMapping("/sign_up")
     @ResponseStatus(HttpStatus.CREATED) // this will add a status of 201 CREATED if everything was successfull
     public ResponseEntity<?> sign_up(
-            @RequestParam(name = "name") String userName,
+            @RequestParam(name = "username") String userName,
             @RequestParam(name = "age") Byte userAge,
             @Valid @RequestParam(name = "email") String userEmail,
             @RequestParam(name = "password") String userPassword) {

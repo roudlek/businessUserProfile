@@ -1,70 +1,120 @@
 package com.ex.business.users.security;
 
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.config.Customizer;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.core.userdetails.User;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-//import org.springframework.security.web.SecurityFilterChain;
-//import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-//
-//import static org.springframework.security.config.Customizer.*;
+import com.ex.business.users.Services.UserProfileDetailsService;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-//@Configuration
-//@EnableWebSecurity
+@Configuration
+@EnableWebSecurity
 public class SecurityConfig {
-//    @Bean
-//    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http
-//                .csrf().disable()
-//                .authorizeHttpRequests( auth -> {
-//                    auth.requestMatchers(
-//                            // auth links are allowed by default
-//
-////                            "/oauth2/authorization/github"
-////                            ,"/oauth2/authorization/google",
-//                            "/home","/"
-//                            ,"/api/home","/api/users"
-//                            ,"/login","/register","/css/**","/js/**","/favicon.ico","/webjars/**","/getbyname","/adduser").permitAll();
-////                            .hasRole("USER");
-////                    auth.permitAll();
-//                    auth.anyRequest().authenticated();
-//                })
-//                .formLogin( form -> {
-//                    form.loginPage("/login");
+
+
+    private final UserProfileDetailsService userProfileDetailsService;
+
+    public SecurityConfig(UserProfileDetailsService userProfileDetailsService) {
+        this.userProfileDetailsService = userProfileDetailsService;
+    }
+
+
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests( auth -> {
+                    auth.requestMatchers(
+                            "/","/home"
+                            ,"/api/home","/api/users","/api/sign_up"
+                            ,"/login"
+                            ,"/register","/css/**","/js/**","/favicon.ico","/webjars/**","/getbyname","/adduser").permitAll();
+//                            .hasRole("USER");
+//                  auth.permitAll();
+                    auth.anyRequest().authenticated();
+                })
+                .formLogin( form -> {
+                    form.loginPage("/login");
 //                    form.usernameParameter("username");
 //                    form.passwordParameter("password");
-//                    form.defaultSuccessUrl("/api/home");
+                    form.defaultSuccessUrl("/");
 //                    form.loginProcessingUrl("/login/process");
-//                    form.failureUrl("/login?failed");
-//                    form.permitAll(true);
-//                })
-//
-//                .oauth2Login(
-//                        oauth2 -> {
-////                            its ok to have them both have same path(/login)
-//                    oauth2.loginPage("/login").permitAll();
-//                }
-//                )
-//                .logout(logout ->
-//                        logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll())
-//        .build();
-//    }
-//
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user = User.builder()
-//                .username("user")
-//                .password("password")
-////                .accountExpired(false)
-////                .accountLocked(false)
-////                .credentialsExpired(false)
-////                .roles("USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(user);
-//    }
+                    form.failureUrl("/login?failed");
+                    form.permitAll();
+                })
+                .oauth2Login(
+                        oauth2 -> {
+//                            its ok to have them both have same path(/login)
+                    oauth2.loginPage("/loginwithauth").permitAll(true);
+                }
+                )
+                // form login with sample username and password wont work if auth is also implemented
+
+                .logout(logout ->
+                        logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll())
+        .build();
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userProfileDetailsService)
+                .passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public ClientRegistrationRepository clientRegistrationRepository() {
+        return new InMemoryClientRegistrationRepository(githubClientRegistration());
+    }
+
+    private ClientRegistration githubClientRegistration() {
+        return ClientRegistration.withRegistrationId("github")
+                .clientId("a0d21afc82e627c62373")
+                .clientSecret("70971a1612b3b18b3d5a4d5241bfc6daf4088ccd")
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .redirectUri("localhost:8080/login/oauth2/code/{registrationId}")
+                .scope("read:user")
+                .authorizationUri("https://github.com/login/oauth/authorize")
+                .tokenUri("https://github.com/login/oauth/access_token")
+                .userInfoUri("https://api.github.com/user")
+                .userNameAttributeName("login")
+                .clientName("GitHub")
+                // Add other GitHub OAuth2 details
+                .build();
+    }
+
+
+    @Bean
+    public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService() {
+        return new DefaultOAuth2UserService();
+    }
+
+
+    @Bean
+    public OAuth2AuthorizationRequestResolver authorizationRequestResolver(
+            ClientRegistrationRepository clientRegistrationRepository
+//            ,OAuth2AuthorizationRequestRedirectFilter filter
+    ) {
+        return new DefaultOAuth2AuthorizationRequestResolver(
+                clientRegistrationRepository, "/oauth2/authorization");
+//        /oauth2/authorization/github
+    }
 }

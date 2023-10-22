@@ -20,7 +20,7 @@ public class UserProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "name can't be empty")
-    @Size(min = 3, max = 50)
+    @Size(min = 3, max = 50) // should be unique, i need to add username field
     private String name;
 
     @Max(value = 127, message = "Access denied for age above 127.") @Min(value = 18,message = "Access denied for age under 18.")
@@ -30,9 +30,7 @@ public class UserProfile {
     @Size(min = 10, max = 100)
     private String email;
 
-
-
-//  at least one number, one Capital letter, one special character, 8 characters
+//  at least one number, one Capital letter, one special character, 8 characters // password encryption not implemented yet
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$", message = "Password does not meet the right format.")
     private String password;
 
