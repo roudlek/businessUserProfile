@@ -53,7 +53,7 @@ public class SecurityConfig {
 //                    form.passwordParameter("password");
                     form.defaultSuccessUrl("/templates/users");
 //                    form.loginProcessingUrl("/login/process");
-                    form.failureUrl("/login?failed");
+                    form.failureUrl("/login?failed=true");
                     form.permitAll();
                 })
                 .oauth2Login(

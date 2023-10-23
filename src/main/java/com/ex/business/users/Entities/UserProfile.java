@@ -21,6 +21,7 @@ public class UserProfile {
     private Long id;
     @NotBlank(message = "name can't be empty")
     @Size(min = 3, max = 50) // should be unique, i need to add username field
+    @Column(nullable = false, unique = true)
     private String name;
 
 //    @Max(value = 127, message = "Access denied for age above 127.") @Min(value = 18,message = "Access denied for age under 18.")
@@ -28,6 +29,7 @@ public class UserProfile {
 
     @Email(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
     @Size(min = 10, max = 100)
+    @Column(nullable = false, unique = true)
     private String email;
 
 //  at least one number, one Capital letter, one special character, 8 characters // password encryption not implemented yet

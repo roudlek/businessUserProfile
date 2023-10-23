@@ -49,7 +49,7 @@ public class RegistrationController {
         } else if (response.getStatusCode() == HttpStatus.CREATED) {
 //            model.addAttribute("success",true);
             // such as sending a confirmation email, logging in the user, etc.
-            return "redirect:/redirectingToLogin"; // Redirect to the login page
+            return "/redirectingToLogin"; // Redirect to the login page
         } else {
             // Handle any other cases or errors that might occur during registration
             // You can redirect to an error page or another appropriate action.

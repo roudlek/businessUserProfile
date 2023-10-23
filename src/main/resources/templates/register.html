@@ -16,7 +16,7 @@
             </p>
             <p class="flex flex-col items-center justify-center mt-10 text-center">
                 <span >Already have an account ?</span>
-                <button th:href="@{/login}" type="submit" class="underline">Login Now!</button>
+                <a href="/login" class="underline">Login Now!</a>
             </p>
             <p class="mt-6 text-sm text-center text-gray-300">
                 Read our <a href="#" class="underline">Terms</a> and <a href="#" class="underline">Conditions</a>
@@ -87,6 +87,7 @@
                                name="username"
                                id="username"
                                autofocus
+                               tabindex="1"
                                class="px-4 py-2 transition duration-300 border border-gray-300 rounded
                                 focus:border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-200" />
                     </div>
@@ -95,7 +96,7 @@
                         <input type="email"
                                name="email"
                                id="email"
-                               autofocus
+                               tabindex="2"
                                class="px-4 py-2 transition duration-300 border border-gray-300 rounded
                                 focus:border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-200" />
                     </div>
@@ -107,6 +108,7 @@
                         <input type="password"
                                name="password"
                                id="password"
+                               tabindex="3"
                                class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-200" />
                     </div>
                     <div th:if="${param.error}">
@@ -117,11 +119,11 @@
                     </div>
 
                     <div class="flex items-center space-x-2">
-                        <input type="checkbox" id="remember" class="w-4 h-4 transition duration-300 rounded focus:ring-2 focus:ring-offset-0 focus:outline-none focus:ring-gray-200" />
+                        <input type="checkbox" tabindex="4" id="remember" class="w-4 h-4 transition duration-300 rounded focus:ring-2 focus:ring-offset-0 focus:outline-none focus:ring-gray-200" />
                         <label for="remember" class="text-sm font-semibold text-gray-500"> Remember Me On This System </label>
                     </div>
                     <div>
-                        <button type="submit" value="Sign in" class="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-yellow-600 rounded-md shadow hover:bg-yellow-500 focus:outline-none focus:ring-yellow-200 focus:ring-4">
+                        <button type="submit" tabindex="5" value="Sign in" class="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-yellow-600 rounded-md shadow hover:bg-yellow-500 focus:outline-none focus:ring-yellow-200 focus:ring-4">
                             Register
 
 
