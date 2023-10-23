@@ -33,26 +33,25 @@ public class SecurityConfig {
         this.userProfileDetailsService = userProfileDetailsService;
     }
 
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests( auth -> {
+                .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(
-                            "/","/home"
-                            ,"/api/home","/api/users","/api/sign_up"
-                            ,"/login"
-                            ,"/register","/css/**","/js/**","/favicon.ico","/webjars/**","/getbyname","/adduser").permitAll();
+                            "/", "/home"
+                            , "/api/home", "/api/users", "/api/sign_up"
+                            , "/login"
+                            , "/register", "/css/**", "/js/**", "/favicon.ico", "/webjars/**", "/getbyname", "/adduser").permitAll();
 //                            .hasRole("USER");
 //                  auth.permitAll();
                     auth.anyRequest().authenticated();
                 })
-                .formLogin( form -> {
+                .formLogin(form -> {
                     form.loginPage("/login");
 //                    form.usernameParameter("username");
 //                    form.passwordParameter("password");
-                    form.defaultSuccessUrl("/");
+                    form.defaultSuccessUrl("/templates/users");
 //                    form.loginProcessingUrl("/login/process");
                     form.failureUrl("/login?failed");
                     form.permitAll();
@@ -60,15 +59,17 @@ public class SecurityConfig {
                 .oauth2Login(
                         oauth2 -> {
 //                            its ok to have them both have same path(/login)
-                    oauth2.loginPage("/loginwithauth").permitAll(true);
-                }
+                            oauth2.loginPage("/login").permitAll();
+                            oauth2.defaultSuccessUrl("/templates/users");
+                        }
                 )
                 // form login with sample username and password wont work if auth is also implemented
 
                 .logout(logout ->
                         logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll())
-        .build();
+                .build();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -80,41 +81,42 @@ public class SecurityConfig {
                 .passwordEncoder(passwordEncoder());
     }
 
-    @Bean
-    public ClientRegistrationRepository clientRegistrationRepository() {
-        return new InMemoryClientRegistrationRepository(githubClientRegistration());
-    }
+//    @Bean
+//    public ClientRegistrationRepository clientRegistrationRepository() {
+//        return new InMemoryClientRegistrationRepository(githubClientRegistration());
+//    }
 
-    private ClientRegistration githubClientRegistration() {
-        return ClientRegistration.withRegistrationId("github")
-                .clientId("a0d21afc82e627c62373")
-                .clientSecret("70971a1612b3b18b3d5a4d5241bfc6daf4088ccd")
-                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .redirectUri("localhost:8080/login/oauth2/code/{registrationId}")
-                .scope("read:user")
-                .authorizationUri("https://github.com/login/oauth/authorize")
-                .tokenUri("https://github.com/login/oauth/access_token")
-                .userInfoUri("https://api.github.com/user")
-                .userNameAttributeName("login")
-                .clientName("GitHub")
-                // Add other GitHub OAuth2 details
-                .build();
-    }
-
-
-    @Bean
-    public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService() {
-        return new DefaultOAuth2UserService();
-    }
+//    private ClientRegistration githubClientRegistration() {
+//        return ClientRegistration.withRegistrationId("github")
+//                .clientId("a0d21afc82e627c62373")
+//                .clientSecret("70971a1612b3b18b3d5a4d5241bfc6daf4088ccd")
+//                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+//                .redirectUri("localhost:8080/templates/users")
+////                .redirectUri("localhost:8080/login/oauth2/code/{registrationId}")
+////                .scope("read:user")
+//                .authorizationUri("http://localhost:8080/login/oauth2/code/github")
+////                .tokenUri("https://github.com/login/oauth/access_token")
+////                .userInfoUri("https://api.github.com/user")
+////                .userNameAttributeName("login")
+//                .clientName("GitHub")
+//                // Add other GitHub OAuth2 details
+//                .build();
+//    }
 
 
-    @Bean
-    public OAuth2AuthorizationRequestResolver authorizationRequestResolver(
-            ClientRegistrationRepository clientRegistrationRepository
-//            ,OAuth2AuthorizationRequestRedirectFilter filter
-    ) {
-        return new DefaultOAuth2AuthorizationRequestResolver(
-                clientRegistrationRepository, "/oauth2/authorization");
-//        /oauth2/authorization/github
-    }
+//    @Bean
+//    public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService() {
+//        return new DefaultOAuth2UserService();
+//    }
+
+
+//    @Bean
+//    public OAuth2AuthorizationRequestResolver authorizationRequestResolver(
+//            ClientRegistrationRepository clientRegistrationRepository
+////            ,OAuth2AuthorizationRequestRedirectFilter filter
+//    ) {
+//        return new DefaultOAuth2AuthorizationRequestResolver(
+//                clientRegistrationRepository, "/oauth2/authorization");
+////        /oauth2/authorization/github
+//    }
 }

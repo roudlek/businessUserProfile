@@ -1,4 +1,4 @@
-package com.ex.business.users.Controller;
+package com.ex.business.users.RestController;
 
 import com.ex.business.users.DTO.UserProfileDTO;
 import com.ex.business.users.Repositories.UserRepository;
@@ -24,15 +24,15 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class HomeController {
+public class Rest {
 
     private final UserProfileSignUpService userProfileSignUpService;
     private final UserProfileLoginService userProfileLoginService;
     private final UsersServiceImpl usersServiceImpl;
     private final UserRepository userRepository;
 
-    public HomeController(UserProfileSignUpService userProfileSignUpService,
-                          UserProfileLoginService userProfileLoginService, UsersServiceImpl usersServiceImpl, UserRepository userRepository) {
+    public Rest(UserProfileSignUpService userProfileSignUpService,
+                UserProfileLoginService userProfileLoginService, UsersServiceImpl usersServiceImpl, UserRepository userRepository) {
         this.userProfileSignUpService = userProfileSignUpService;
         this.userProfileLoginService = userProfileLoginService;
         this.usersServiceImpl = usersServiceImpl;
@@ -100,10 +100,9 @@ public class HomeController {
     @ResponseStatus(HttpStatus.CREATED) // this will add a status of 201 CREATED if everything was successfull
     public ResponseEntity<?> sign_up(
             @RequestParam(name = "username") String userName,
-            @RequestParam(name = "age") Byte userAge,
             @Valid @RequestParam(name = "email") String userEmail,
             @RequestParam(name = "password") String userPassword) {
-        return userProfileSignUpService.signUp(userName, userAge, userEmail, userPassword);
+        return userProfileSignUpService.signUp(userName, userEmail, userPassword);
     }
 
     @PutMapping("/changeFullResource/{userId}")

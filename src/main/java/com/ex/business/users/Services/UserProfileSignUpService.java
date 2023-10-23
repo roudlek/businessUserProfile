@@ -16,7 +16,7 @@ public class UserProfileSignUpService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<?> signUp(String userName, Byte userAge, String userEmail, String userPassword) {
+    public ResponseEntity<?> signUp(String userName, String userEmail, String userPassword) {
 
         UserProfile userProfile = userRepository.findByEmail(userEmail);
         if (userProfile != null) {
@@ -25,7 +25,6 @@ public class UserProfileSignUpService {
             PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
             UserProfile newUserProfile = new UserProfile();
             newUserProfile.setName(userName);
-            newUserProfile.setAge(userAge);
             newUserProfile.setEmail(userEmail);
             newUserProfile.setPassword(bCryptPasswordEncoder.encode(userPassword));
 

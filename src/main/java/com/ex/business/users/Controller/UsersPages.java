@@ -3,15 +3,11 @@ package com.ex.business.users.Controller;
 import com.ex.business.users.DTO.UserProfileDTO;
 import com.ex.business.users.Entities.UserProfile;
 import com.ex.business.users.Services.UsersServiceImpl;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +20,10 @@ public class UsersPages {
     public UsersPages(UsersServiceImpl usersServiceImpl) {
         this.usersServiceImpl = usersServiceImpl;
     }
+
+//    public UsersPages(UsersServiceImpl usersServiceImpl) {
+//        this.usersServiceImpl = usersServiceImpl;
+//    }
 
     @GetMapping("/users")
     public String getUsersPage(Model model){

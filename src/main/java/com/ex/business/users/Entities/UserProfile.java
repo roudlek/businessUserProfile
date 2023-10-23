@@ -23,7 +23,7 @@ public class UserProfile {
     @Size(min = 3, max = 50) // should be unique, i need to add username field
     private String name;
 
-    @Max(value = 127, message = "Access denied for age above 127.") @Min(value = 18,message = "Access denied for age under 18.")
+//    @Max(value = 127, message = "Access denied for age above 127.") @Min(value = 18,message = "Access denied for age under 18.")
     private Byte age;
 
     @Email(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
