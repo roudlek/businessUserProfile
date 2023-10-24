@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserProfile, Long> {
-    UserProfile findByEmail(String userEmail);
+    UserProfile findByNameAndEmail(String userEmail, String Email);
     Optional<UserProfile> findById(Long id);
     List<UserProfile> findAllByNameContains(String Keyword);
 

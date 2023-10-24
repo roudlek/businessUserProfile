@@ -36,13 +36,11 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable())
+//                .csrf(csrf -> csrf.disable()) // csrf prootection is enabled by default, there is no enable method
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(
-                            "/", "/home"
-                            , "/api/home", "/api/users", "/api/sign_up"
-                            , "/login"
-                            , "/register", "/css/**", "/js/**", "/favicon.ico", "/webjars/**", "/getbyname", "/adduser").permitAll();
+                            "/", "/api/users", "/login", "/register",
+                            "/css/**", "/js/**", "/favicon.ico", "/webjars/**").permitAll();
 //                            .hasRole("USER");
 //                  auth.permitAll();
                     auth.anyRequest().authenticated();

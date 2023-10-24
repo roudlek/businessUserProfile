@@ -19,8 +19,9 @@ public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "name can't be empty")
-    @Size(min = 3, max = 50) // should be unique, i need to add username field
+    @Size(min = 3, max = 30) // should be unique, i need to add username field
     @Column(nullable = false, unique = true)
     private String name;
 
@@ -28,11 +29,11 @@ public class UserProfile {
     private Byte age;
 
     @Email(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
-    @Size(min = 10, max = 100)
+    @Size(min = 10, max = 50)
     @Column(nullable = false, unique = true)
     private String email;
 
-//  at least one number, one Capital letter, one special character, 8 characters // password encryption not implemented yet
+//  at least one number, one Capital letter, one special character, minimum 8 characters
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$", message = "Password does not meet the right format.")
     private String password;
 

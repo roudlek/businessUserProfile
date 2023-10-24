@@ -14,8 +14,8 @@ public class UserProfileLoginService {
     public UserProfileLoginService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    public ResponseEntity<?> login(String userEmail, String userPassword){
-        UserProfile userProfile = userRepository.findByEmail(userEmail);
+    public ResponseEntity<?> login(String userEmail, String userName, String userPassword){
+        UserProfile userProfile = userRepository.findByNameAndEmail(userName,userEmail);
 
         if (userProfile != null) {
             String userProfilePassword = userProfile.getPassword();

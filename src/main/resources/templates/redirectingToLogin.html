@@ -2,9 +2,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            height: 100vh; /* Set the body height to 100% of viewport height */
+            margin: 0; /* Remove default margin */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #008000; /* Green color */
+            position: absolute;
+            top: 50%; /* Position 50% from the top */
+            left: 50%; /* Position 50% from the left */
+            transform: translate(-50%, -50%); /* Center the element */
+        }
+
+        p {
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-<h1>Successfull You are now being redirected to the login page</h1>
+<h1>Successfull Registration You are now being redirected to the login page</h1>
 
 <!-- JavaScript for introducing a delay and final redirection -->
 <script type="text/javascript">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Please Register</title>
+    <title>Registration page</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
@@ -12,10 +12,11 @@
                 <a href="#">User business </a>
             </div>
             <p class="mt-6 font-normal text-center text-gray-300 md:mt-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni praesentium recusandae, velit, aliquam autem blanditiis.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni praesentium recusandae, velit, aliquam
+                autem blanditiis.
             </p>
             <p class="flex flex-col items-center justify-center mt-10 text-center">
-                <span >Already have an account ?</span>
+                <span>Already have an account ?</span>
                 <a href="/login" class="underline">Login Now!</a>
             </p>
             <p class="mt-6 text-sm text-center text-gray-300">
@@ -27,11 +28,14 @@
             <div th:if="${param.success}">
                 Successfull registration
             </div>
-            <form th:action="@{/register}" role="form" method="post" class="flex flex-col space-y-5">
+            <form th:object="${registrationForm}" th:action="@{/register}" role="form" method="post"
+                  class="flex flex-col space-y-5">
                 <div class="flex flex-col space-y-4">
-                    <a href="/oauth2/authorization/github" class="flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-800 rounded-md group hover:bg-gray-800 focus:outline-none">
+                    <a href="/oauth2/authorization/github"
+                       class="flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-gray-800 rounded-md group hover:bg-gray-800 focus:outline-none">
               <span>
-                <svg class="w-5 h-5 text-gray-800 fill-current group-hover:text-white" viewBox="0 0 16 16" version="1.1" aria-hidden="true">
+                <svg class="w-5 h-5 text-gray-800 fill-current group-hover:text-white" viewBox="0 0 16 16" version="1.1"
+                     aria-hidden="true">
                   <path fill-rule="evenodd"
                         d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
                   </path>
@@ -39,7 +43,8 @@
               </span>
                         <span class="text-sm font-medium text-gray-800 group-hover:text-white">Github</span>
                     </a>
-                    <a href="/oauth2/authorization/twitter" class="flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-blue-500 rounded-md group hover:bg-blue-500 focus:outline-none">
+                    <a href="/oauth2/authorization/twitter"
+                       class="flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-blue-500 rounded-md group hover:bg-blue-500 focus:outline-none">
               <span>
                 <svg class="text-blue-500 group-hover:text-white" width="20" height="20" fill="currentColor">
                   <path
@@ -49,26 +54,29 @@
               </span>
                         <span class="text-sm font-medium text-blue-500 group-hover:text-white">Twitter</span>
                     </a>
-                    <a href="/oauth2/authorization/google" class="flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-black rounded-md group hover:bg-gray-200 focus:outline-none">
+                    <a href="/oauth2/authorization/google"
+                       class="flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-black rounded-md group hover:bg-gray-200 focus:outline-none">
               <span>
-                <svg class="text-black group-hover:text-black" width="20" height="20" viewBox="0 0 55 55" fill="currentColor">
+                <svg class="text-black group-hover:text-black" width="20" height="20" viewBox="0 0 55 55"
+                     fill="currentColor">
                   <path
                           d="M37.2938 40.1687C34.5188 42.5125 30.9188 44 27 44C21.1688 44 16.05 40.7875 13.275 36.1L14.3139 31.3111L18.9188 30.4562C19.9875 33.9062 23.2125 36.4375 27 36.4375C28.8375 36.4375 30.5438 35.8562 31.95 34.825L36.375 35.5L37.2938 40.1687Z"
-                          fill="#59C36A" />
-                  <path d="M37.2938 40.1688L36.375 35.5L31.95 34.825C30.5438 35.8563 28.8374 36.4375 27 36.4375V44C30.9188 44 34.5188 42.5125 37.2938 40.1688Z" fill="#00A66C" />
+                          fill="#59C36A"/>
+                  <path d="M37.2938 40.1688L36.375 35.5L31.95 34.825C30.5438 35.8563 28.8374 36.4375 27 36.4375V44C30.9188 44 34.5188 42.5125 37.2938 40.1688Z"
+                        fill="#00A66C"/>
                   <path d="M18.5625 28C18.5625 28.8624 18.6937 29.6874 18.9187 30.4562L13.275 36.1C11.8688 33.7375 11 30.9624 11 28C11 25.0374 11.8688 22.2625 13.275 19.9L17.8046 20.6796L18.9187 25.5437C18.6937 26.3124 18.5625 27.1374 18.5625 28Z"
-                        fill="#FFDA2D" />
+                        fill="#FFDA2D"/>
                   <path
                           d="M43 28C43 32.8749 40.7438 37.2438 37.2938 40.1688L31.95 34.825C33.0374 34.0374 33.9562 32.9874 34.5562 31.75H27C26.4749 31.75 26.0625 31.3374 26.0625 30.8125V25.1875C26.0625 24.6624 26.4749 24.25 27 24.25H41.8C42.25 24.25 42.6437 24.5687 42.7188 25.0187C42.9062 25.9937 43 27.0062 43 28Z"
-                          fill="#4086F4" />
+                          fill="#4086F4"/>
                   <path d="M34.5563 31.75C33.9563 32.9874 33.0374 34.0374 31.9501 34.825L37.2938 40.1688C40.7438 37.2438 43 32.875 43 28C43 27.0062 42.9062 25.9937 42.7187 25.0187C42.6437 24.5687 42.2499 24.25 41.7999 24.25H27V31.75H34.5563Z"
-                        fill="#4175DF" />
+                        fill="#4175DF"/>
                   <path
                           d="M37.5563 16.4687C37.575 16.7312 37.4625 16.975 37.2938 17.1624L33.2813 21.1562C32.9626 21.4937 32.4376 21.5312 32.0626 21.2499C30.5812 20.1437 28.8375 19.5625 27 19.5625C23.2125 19.5625 19.9875 22.0937 18.9188 25.5437L13.275 19.9C16.05 15.2125 21.1688 12 27 12C30.7313 12 34.3688 13.375 37.2188 15.7749C37.425 15.9437 37.5375 16.2062 37.5563 16.4687Z"
-                          fill="#FF641A" />
+                          fill="#FF641A"/>
                   <path
                           d="M32.0625 21.2499C32.4375 21.5312 32.9624 21.4937 33.2812 21.1562L37.2937 17.1624C37.4625 16.975 37.575 16.7312 37.5562 16.4687C37.5374 16.2061 37.4249 15.9437 37.2187 15.7749C34.3687 13.375 30.7313 12 27 12V19.5625C28.8374 19.5625 30.5812 20.1437 32.0625 21.2499Z"
-                          fill="#F03800" />
+                          fill="#F03800"/>
                 </svg>
               </span>
                         <span class="text-sm font-medium text-black group-hover:text-black">Google</span>
@@ -86,44 +94,121 @@
                         <input type="text"
                                name="username"
                                id="username"
+                               autocomplete="name"
+                               th:field="*{username}"
                                autofocus
+                               required
                                tabindex="1"
                                class="px-4 py-2 transition duration-300 border border-gray-300 rounded
-                                focus:border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-200" />
+                                focus:border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-200"
+                               style="text-decoration: none;"
+                        />
                     </div>
+                    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
                     <div class="flex flex-col space-y-1">
                         <label for="email" class="text-sm font-semibold text-gray-500">Email</label>
                         <input type="email"
                                name="email"
                                id="email"
+                               autocomplete="email"
+                               th:field="*{email}"
+                               required
                                tabindex="2"
                                class="px-4 py-2 transition duration-300 border border-gray-300 rounded
-                                focus:border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-200" />
+                                focus:border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-200"
+                               style="text-decoration: none;"/>
                     </div>
+                    <!--                                               pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+               -->
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
                     <div class="flex flex-col space-y-1">
                         <div class="flex items-center justify-between">
                             <label for="password" class="text-sm font-semibold text-gray-500">Password</label>
-                            <a href="#" class="text-sm text-blue-600 hover:underline focus:text-blue-800">Forgot Password ?</a>
+                            <a href="#" class="text-sm text-blue-600 hover:underline focus:text-blue-800">Forgot
+                                Password?</a>
                         </div>
                         <input type="password"
                                name="password"
                                id="password"
+                               autocomplete="new-password"
+
+                               th:field="*{password}"
+                               required
                                tabindex="3"
-                               class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-200" />
+                               aria-describedby="password-constraints"
+                               class="px-4 py-2 transition duration-300 border border-gray-300 rounded
+                                focus:border-transparent focus:outline-none focus:ring-4 focus:ring-yellow-200"
+                               style="text-decoration: none;"/>
                     </div>
+                    <!--                    pattern="/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\S+$).{8,}$/g"-->
+                    <!-- Show Password Button -->
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" tabindex="4" id="showPasswordButton" tabindex="4"
+                               onclick="togglePasswordVisibility()"
+                               class="w-4 h-4 transition duration-300 rounded focus:ring-2 focus:ring-offset-0 focus:outline-none focus:ring-gray-200"/>
+                        <label for="showPasswordButton" class="text-sm font-semibold text-gray-500"> Show
+                            Password </label>
+                    </div>
+
+                    <script>
+                        function togglePasswordVisibility() {
+                            var passwordInput = document.getElementById("password");
+                            var showPasswordButton = document.getElementById("showPasswordButton");
+
+                            if (passwordInput.type === "password") {
+                                passwordInput.type = "text";
+                                showPasswordButton.textContent = "Hide Password";
+                                passwordInput.focus(); // Set focus back to the password input
+                            } else {
+                                passwordInput.type = "password";
+                                showPasswordButton.textContent = "Show Password";
+                                passwordInput.focus(); // Set focus back to the password input
+                            }
+                        }
+
+                    </script>
+
+
+                    <script>
+                        var passwordInput = document.getElementById("password");
+                        var passwordConstraints = document.getElementById("password-constraints");
+
+                        passwordInput.addEventListener("input", function() {
+                            var password = passwordInput.value;
+
+                            var pattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\S+$).{8,}$/;
+
+                            if (pattern.test(password)) {
+                                passwordInput.setCustomValidity('');
+                            } else {
+                                passwordInput.setCustomValidity("At least one number, one capital letter, one special character, minimum 8 characters");
+                            }
+                        });
+                    </script>
+
+                    <!--                    pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\S+$).{8,}$"-->
+
+                    <!--                    <button id="toggle-password" type="button" aria-label="Show password as plain text. Warning: this will display your password on the screen.">Show password</button>-->
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+
                     <div th:if="${param.error}">
                         an error happened
                     </div>
                     <div th:if="${param.exist}">
-                        This user is already registered, please login
+                        This user is already registered, please <a href="/login" class="underline">click here to
+                        Login</a>
                     </div>
 
                     <div class="flex items-center space-x-2">
-                        <input type="checkbox" tabindex="4" id="remember" class="w-4 h-4 transition duration-300 rounded focus:ring-2 focus:ring-offset-0 focus:outline-none focus:ring-gray-200" />
-                        <label for="remember" class="text-sm font-semibold text-gray-500"> Remember Me On This System </label>
+                        <input type="checkbox" tabindex="5" id="remember"
+                               class="w-4 h-4 transition duration-300 rounded focus:ring-2 focus:ring-offset-0 focus:outline-none focus:ring-gray-200"/>
+                        <label for="remember" class="text-sm font-semibold text-gray-500"> Remember Me On This
+                            System </label>
                     </div>
                     <div>
-                        <button type="submit" tabindex="5" value="Sign in" class="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-yellow-600 rounded-md shadow hover:bg-yellow-500 focus:outline-none focus:ring-yellow-200 focus:ring-4">
+                        <button type="submit" tabindex="5" value="Sign in"
+                                class="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-yellow-600 rounded-md shadow hover:bg-yellow-500 focus:outline-none focus:ring-yellow-200 focus:ring-4">
                             Register
 
 
@@ -186,8 +271,6 @@
 <!--<div><a href="http://localhost:8080/oauth2/authorization/google">Login with Google</a></div>-->
 <!--</body>-->
 <!--</html>-->
-
-
 
 
 <!--<!DOCTYPE html>-->

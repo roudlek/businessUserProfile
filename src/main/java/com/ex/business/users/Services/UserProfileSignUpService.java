@@ -10,27 +10,53 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserProfileSignUpService {
-    public UserRepository userRepository;
+    private final UserRepository userRepository;
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public UserProfileSignUpService(UserRepository userRepository) {
+    public UserProfileSignUpService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public ResponseEntity<?> signUp(String userName, String userEmail, String userPassword) {
+        UserProfile existingUser = userRepository.findByNameAndEmail(userName, userEmail);
 
-        UserProfile userProfile = userRepository.findByEmail(userEmail);
-        if (userProfile != null) {
+        if (existingUser != null) {
+            // User with the same name and email already exists
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists.");
-        } else {
-            PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        } else if (existingUser == null){
+            // Create a new user profile
             UserProfile newUserProfile = new UserProfile();
             newUserProfile.setName(userName);
             newUserProfile.setEmail(userEmail);
-            newUserProfile.setPassword(bCryptPasswordEncoder.encode(userPassword));
+            newUserProfile.setPassword(passwordEncoder.encode(userPassword));
 
-            userRepository.save(newUserProfile);
+            UserProfile savedUserProfile = userRepository.save(newUserProfile);
 
-            return new ResponseEntity<>(newUserProfile, HttpStatus.CREATED);
+            // Registration successful
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedUserProfile);
         }
-    }
+        else {
+            // Handle the case where user creation fails
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User registration failed.");
+        }
+}
+
+//    public ResponseEntity<?> signUp(String userName, String userEmail, String userPassword) {
+//
+//        UserProfile userProfile = userRepository.findByNameAndEmail(userName,userEmail);
+//        if (userProfile != null) {
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists.");
+//        } else {
+//            PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+//            UserProfile newUserProfile = new UserProfile();
+//            newUserProfile.setName(userName);
+//            newUserProfile.setEmail(userEmail);
+//            newUserProfile.setPassword(bCryptPasswordEncoder.encode(userPassword));
+//
+//            userRepository.save(newUserProfile);
+//
+//            return new ResponseEntity<>(newUserProfile, HttpStatus.CREATED);
+//        }
+//    }
 }
