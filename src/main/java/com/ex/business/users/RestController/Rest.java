@@ -45,19 +45,19 @@ public class Rest {
 //        return usersService.findUserById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 //    }
 
-    @PostConstruct
-    public void init() {
-        System.out.println("from post construct");
-//        for(int i = 0; i < 100 ; i++){
-//            UserProfile userProfile = new UserProfile( "ahmad", (byte) 18, "ahmad@gmail.com", "Abdel123@@@@");
-//            userRepository.save(userProfile);
-//        }
-    }
-
-    @PreDestroy
-    public void destroy() {
-        System.out.println("from pre destroy");
-    }
+//    @PostConstruct
+//    public void init() {
+//        System.out.println("from post construct");
+////        for(int i = 0; i < 100 ; i++){
+////            UserProfile userProfile = new UserProfile( "ahmad", (byte) 18, "ahmad@gmail.com", "Abdel123@@@@");
+////            userRepository.save(userProfile);
+////        }
+//    }
+//
+//    @PreDestroy
+//    public void destroy() {
+//        System.out.println("from pre destroy");
+//    }
 
     @GetMapping("/home")
     public ResponseEntity<String> homePage() {
